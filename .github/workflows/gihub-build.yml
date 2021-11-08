@@ -1,0 +1,34 @@
+
+name: Building OTPgui binaries
+
+
+on:
+  push:
+    tags: '*'
+    branches: [ cicd, test_* ]
+
+
+jobs:
+
+  build_win:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        architecture: 'x64'
+    - name: Build bin package
+      run: |
+        cd package
+        ./Build-Windows.bat
+    - name: 'Archive windows bin (unsigned!)'
+      uses: actions/upload-artifact@v2
+      with:
+        name: windist-unsigned
+        path: |
+          dist/
+
