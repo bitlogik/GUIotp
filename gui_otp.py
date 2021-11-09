@@ -104,6 +104,7 @@ class GuiApp:
         if hasattr(sys, "_MEIPASS"):
             file_icon = path.join(sys._MEIPASS, file_icon)
         self.mainwin.iconphoto(True, tk.PhotoImage(file=file_icon))
+        self.mainwin.minsize(300, 0)
         self.mainwin.resizable(width=False, height=False)
         self.srv_txt = tk.StringVar()
         self.wlabel = tk.Label(
