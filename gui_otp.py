@@ -43,10 +43,10 @@ class OtpFile:
         if not path.isdir(dir_path):
             self.create_path(dir_path)
         if not path.exists(self.file_path):
-            self.create_blank_file(self.file_path)
+            self.create_blank_file()
 
     @classmethod
-    def path_from_appname(cls, app_name, author):
+    def from_appname(cls, app_name, author):
         """
         Get file/directory path of user config
         from the app name and its authors.
@@ -64,10 +64,9 @@ class OtpFile:
         """Create user config directory for the app."""
         makedirs(path_create)
 
-    @staticmethod
-    def create_blank_file(file_create):
+    def create_blank_file(self):
         """Create a blank file in the user config directory."""
-        with open(file_create, "w", encoding="utf8") as fwrite:
+        with open(self.file_path, "w", encoding="utf8") as fwrite:
             print("", file=fwrite, end="")
 
     def read_filelines(self):
@@ -190,7 +189,7 @@ class OtpApp:
     ssecret_regex = re.compile(r"^[A-Z2-7]{2,}={0,6}$")
 
     def __init__(self):
-        self.srv_file = OtpFile.path_from_appname("otppy", "BitLogiK")
+        self.srv_file = OtpFile.from_appname("otppy", "BitLogiK")
         self.load_services()
         self.gui = GuiApp()
         self.update_otp()
