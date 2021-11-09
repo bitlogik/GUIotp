@@ -13,7 +13,7 @@ SET PYINSTALLER_VER=4.5.1
 REM Detect if run in Github Action
 IF "%GITHUB_ACTION%"=="" (
   REM Building in a standard machine
-  SET python_bin="%UserProfile%\AppData\Local\Programs\Python\Python39\python.exe"
+  SET python_bin="%UserProfile%\AppData\Local\Programs\Python\Python310\python.exe"
   SET pyinst_dest="C:\pyinstaller_src"
 ) ELSE (
   REM Building in a Github Action VM
@@ -21,11 +21,10 @@ IF "%GITHUB_ACTION%"=="" (
   SET pyinst_dest=%HOME%
 )
 
-SET python_env="otpenv\Scripts\python"
-
 
 echo Preparing environment and dependencies
 %python_bin% -m venv otpenv
+SET python_env="otpenv\Scripts\python"
 %python_env% -m pip install -U pip
 %python_env% -m pip install wheel
 %python_env% setup.py install
