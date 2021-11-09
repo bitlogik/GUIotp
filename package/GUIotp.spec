@@ -1,12 +1,25 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-import os
+
+import platform
 from package.build_win_verinfo import fill_version_info
 from gui_otp import VERSION
 
-FILE_NAME = "GUIotp"
+
+os_system = platform.system()
+if os_system == "Windows":
+    os_platform = "win"
+elif os_system == "Linux":
+    os_platform = "linux"
+elif os_system == "Darwin":
+    os_platform = "mac"
+else:
+    raise Exception("Unknown platform target")
+plt_arch = platform.machine().lower()
+
+BIN_NAME = "GUIotp" + "-" + os_platform + "-" + plt_arch + "-" + VERSION
 FILE_DESCRIPTION = "GUIotp application executable"
-COMMENTS = "GUIotp : GUI 2FA TOTP desktop client"
+COMMENTS = "GUIotp : GUI 2FA OTP desktop app"
 
 
 pkgs_remove = [
@@ -16,11 +29,15 @@ pkgs_remove = [
     "libdgamln",
 ]
 
+additional_imports = []
+if os_platform == "mac":
+    additional_imports.append("certifi")
+
 dataset = Analysis(
     ["../gui_otp.py"],
     binaries=[],
     datas=[("../res/guiotp-icon.png", "res/")],
-    hiddenimports=[],
+    hiddenimports=additional_imports,
     hookspath=[],
     runtime_hooks=[],
     excludes=[
@@ -42,9 +59,11 @@ for pkg in pkgs_remove:
 
 pyz = PYZ(dataset.pure, dataset.zipped_data, cipher=None)
 
-file_version = VERSION
-
-fill_version_info(FILE_NAME, file_version, FILE_DESCRIPTION, COMMENTS)
+if os_platform == "win":
+    fill_version_info(BIN_NAME, VERSION, FILE_DESCRIPTION, COMMENTS)
+    version_info_file = "version_info"
+else:
+    version_info_file = None
 
 exe = EXE(
     pyz,
@@ -53,13 +72,13 @@ exe = EXE(
     dataset.zipfiles,
     dataset.datas,
     [],
-    name=FILE_NAME,
+    name=BIN_NAME,
     debug=False,
     bootloader_ignore_signals=False,
     icon="../res/guiotp.ico",
     strip=False,
-    upx=True,
+    upx=False,
     upx_exclude=[],
     console=False,
-    version="version_info",
+    version=version_info_file,
 )
