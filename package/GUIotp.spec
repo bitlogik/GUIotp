@@ -19,7 +19,7 @@ plt_arch = platform.machine().lower()
 
 BIN_NAME = "GUIotp" + "-" + os_platform + "-" + plt_arch + "-" + VERSION
 FILE_DESCRIPTION = "GUIotp application executable"
-COMMENTS = "GUIotp : GUI 2FA TOTP desktop client"
+COMMENTS = "GUIotp : GUI 2FA OTP desktop app"
 
 
 pkgs_remove = [
@@ -73,7 +73,7 @@ exe = EXE(
     bootloader_ignore_signals=False,
     icon="../res/guiotp.ico",
     strip=False,
-    upx=True,
+    upx=False,
     upx_exclude=[],
     console=False,
     version=version_info_file,

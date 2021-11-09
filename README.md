@@ -12,9 +12,9 @@ https://github.com/bitlogik/GUIotp/releases/latest
 
 To increase the security, all binaries released are signed with the BitLogiK code signing certificate, bringing even greater confidence in the integrity of the application.
 
+
 Soon
 
-- Windows installer
 - MacOS and Linux binaries
 
 
