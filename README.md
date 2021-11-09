@@ -23,6 +23,7 @@ To increase the security, all binaries released are signed with the BitLogiK cod
 Soon
 
 - MacOS and Linux binaries
+- otpauth:// scheme compatible
 
 
 ## Development
