@@ -29,11 +29,15 @@ pkgs_remove = [
     "libdgamln",
 ]
 
+additional_imports = []
+if os_platform == "mac":
+    additional_imports.append("certifi")
+
 dataset = Analysis(
     ["../gui_otp.py"],
     binaries=[],
     datas=[("../res/guiotp-icon.png", "res/")],
-    hiddenimports=[],
+    hiddenimports=additional_imports,
     hookspath=[],
     runtime_hooks=[],
     excludes=[
